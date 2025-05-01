@@ -6,6 +6,7 @@ from default_config import diretorio_musicas_covertidas, diretorio_musicas_cover
 
 from pydub import AudioSegment, effects
 
+
 def show_message(total_atual: int, total_max:int, file: str =None) -> None:
     print(f'Convertidos {total_atual} de {total_max} : {(total_atual/total_max)*100:.2f}%')
     if file: print(f'Iniciando conversão de: {file}')
@@ -141,7 +142,52 @@ def convert_mp3(input_path:str, output_path:str, file:str,
 
     except Exception as e:
         print(f'erro convert_mp3: {e}')
- 
+
+def cut_audio_segment():
+    pasta_audio:str = diretorio_musicas_covertidas
+    pasta_audio_aquivos:list = os.listdir(pasta_audio)
+    tamanho_lista: int = len(pasta_audio_aquivos)
+
+    audios:AudioSegment = AudioSegment
+
+    if tamanho_lista <= 0:
+        print(f'\nPasta vazia: {pasta_audio}')
+        return
+
+    print(f'\nArquivos disponives:')
+    for i in enumerate(pasta_audio_aquivos):
+        print(f'\t[{int(i[0])+ 1}] - {i[1]}')
+    
+    opcao:str = input('Escolha um arquivo para ser recortado.\nDigite o numero: ')
+
+    try:
+        escolha:int = int(opcao) - 1
+    except Exception as e:
+        print('erro: {e}')
+        return
+
+    if 0 > escolha or escolha + 1 > tamanho_lista:
+        print('Opcao invalida')
+        return
+
+
+    if 0 <= escolha <= tamanho_lista:
+        print(f'\nFaixa escolhida: {pasta_audio_aquivos[escolha]}')
+        try:
+            inicio:int = int(input('Digite o segundo inicial: ')) * 1000
+            fim:int = int(input('Digite o segundo final: ')) * 1000
+            audio:AudioSegment = audios.from_file(os.path.join(diretorio_musicas_covertidas, pasta_audio_aquivos[escolha]), pasta_audio_aquivos[escolha][-3::])
+            audio = audio[inicio:fim]
+
+            print('\n', os.path.join(diretorio_musicas_covertidas, f'{pasta_audio_aquivos[escolha][0:-4]}_recortado.mp3'))
+            print(f'inicio: {inicio if inicio == 0 else inicio/1000 } segundos | fim: {fim/1000} segundos')
+
+            audio.export(os.path.join(diretorio_musicas_covertidas, f'{pasta_audio_aquivos[escolha][0:-4]}_recortado.mp3'), format='mp3')
+
+        except Exception as e:
+            print('erro: {e}')
+            return
+        
 
 def run():
     util.setup()
@@ -158,6 +204,8 @@ def run():
         export_mp3_list(arquivos,diretorio_musicas,diretorio_musicas_convertidas, rename_final_file= False)
     else:
         print(f'Arquivo vazio: "{diretorio_musicas}"')
+
+    # cut_audio_segment()
 
 @NotImplementedError
 def __force():
