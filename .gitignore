@@ -167,4 +167,6 @@ assets/video
 assets/audio
 assets/lista_link_youtube
 
-*logs*
+teste/
+logs/
+*.bat
