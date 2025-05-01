@@ -43,4 +43,8 @@ Na função `run` que devem ser alterados são:
 Exemplo, listando arquivo que tenham a extensão `.mp4`, `.mp3`:
 
 ![print-funcao-run](./assets/img/print_def_run.png)
-      
+
+## TROUBLESHOOT
+
+### No module named 'pyaudioop'
+`pip installl audioop-lts`
