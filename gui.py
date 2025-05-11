@@ -1,13 +1,9 @@
-import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 
 # import pygame 
 # pygame.mixer.init()
 
-
-
-# Suponha que você tenha os seguintes módulos/funções
 import util
 
 import convert_to_mp3 as conversor
