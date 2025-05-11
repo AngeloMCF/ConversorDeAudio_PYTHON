@@ -143,6 +143,13 @@ def convert_mp3(input_path:str, output_path:str, file:str,
     except Exception as e:
         print(f'erro convert_mp3: {e}')
 
+def lista_arquivos() -> list[str] | list | None:
+    pasta_audio:str = diretorio_musicas_covertidas
+    pasta_audio_aquivos:list = os.listdir(pasta_audio)
+
+    return pasta_audio_aquivos
+
+
 def cut_audio_segment():
     pasta_audio:str = diretorio_musicas_covertidas
     pasta_audio_aquivos:list = os.listdir(pasta_audio)
@@ -187,7 +194,28 @@ def cut_audio_segment():
         except Exception as e:
             print('erro: {e}')
             return
-        
+
+def cut_audio_segment(file:str, inicio: float, fim: float) -> None:
+
+    audios:AudioSegment = AudioSegment
+
+    print(f'\nFaixa escolhida: {file}')
+    try:
+        inicio:float = float(inicio) * 1000
+        fim:float = float(fim) * 1000
+        audio:AudioSegment = audios.from_file(os.path.join(diretorio_musicas_covertidas, file), file[-3::])
+        audio = audio[inicio:fim]
+
+        # print('\n', os.path.join(diretorio_musicas_covertidas, f'{pasta_audio_aquivos[escolha][0:-4]}_recortado.mp3'))
+        print(f'inicio: {inicio if inicio == 0 else inicio/1000 } segundos | fim: {fim/1000} segundos')
+
+        audio.export(os.path.join(diretorio_musicas_covertidas, f'{file[0:-4]}_recortado.mp3'), format='mp3')
+
+    except Exception as e:
+        print('erro: {e}')
+        return
+    
+
 
 def run():
     util.setup()
