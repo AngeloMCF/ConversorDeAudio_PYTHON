@@ -1,0 +1,11 @@
+audioop-lts==0.2.1
+cabarchive==0.2.4
+cx_Freeze==8.2.0
+cx_Logging==3.2.1
+filelock==3.18.0
+lief==0.16.5
+packaging==25.0
+pydub==0.25.1
+pytubefix==8.12.3
+setuptools==79.0.0
+striprtf==0.0.29
