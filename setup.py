@@ -5,7 +5,8 @@ from cx_Freeze import setup, Executable
 # Dependencies are automatically detected, but it might need fine tuning.
 build_exe_options = {
     "packages" :
-        ["os"], "includes" : ["tkinter", "pytubefix", "pydub", "audioop"]
+        ["os"], "includes" : ["tkinter", "pytubefix", "pydub", "audioop"],
+    "include_files": ["ffmpeg-2024-11-21-git-f298507323-essentials_build.zip"]
 }
 
 # GUI applications require a different base on Windows (the default is fora console application).
