@@ -1,50 +1,97 @@
 # Conversor de audio 
 
-Projeto criado para solucionar e facilitar a conversão de audio de `.mp4` ou, se necessário `.wav`, para `.mp3`
+Projeto criado para solucionar e facilitar a conversão de vídeos `.mp4` e `.m4a` ou, se necessário `.wav`, para `.mp3`
 
 
 ## Index
 
 - [Requerimentos](#requerimentos)
-- [Requerimentos](#requerimentos)
 - [Modo de usar](#modo-de-usar)
+    - [Tela inicial](#tela-inicial)
+    - [Telas de erro](#telas-de-erro)
+- [Instalação](#instalação)
+    - [Instalação dependências](#instalação-dependências)
+    - [Instalação FFMPEG](#instalação-ffmpeg)
 
 ## Requerimentos
-
+- Python >= 3.13.3
+    - pydub
+    - pytubefix
 - FFMPEG
-- pydub
 
 Para execução é necessário o download do `FFMPEG` porque o `PYDUB` usa ele para conversão.
 
-
-## Instalação FFMPEG
-
-Na raiz do projeto contém o arquivo [ffmpeg-2024-11-21-git-f298507323-essentials_build.7z](ffmpeg-2024-11-21-git-f298507323-essentials_build.7z) com os aquivos necessários.
-
-Extrair todos para seu locarl de preferência.
-
-> Recomendado adicionar o caminho da pasta `bin` as variáveis de ambiente do sistema PATH (no Windows)
-
-> Ou passar o caminho para o objeto instanciado.
-
 ## Modo de usar
 
-<!-- - [convert_to_mp3.py](#convert_to_mp3.py) -->
+### Tela inicial
 
-### convert_to_mp3.py
+1. `Baixar vídeo (mp4) e áudio (m4a)` - Com uma url válida do youtube, baixa um aquivo de vídeo (mp4) e um de áudio (m4a) 
+1. `Recortar áudio` - Recorta o arquivo `.mp3` da pasta `./assets/converted` e gera um novo com o tamanho novo informado.
+1. `Baixar áudio (mp3)` - Com uma url válida do youtube, baixa um aquivo de vídeo (mp4) e um de áudio (m4a)
+- `Encerrar execução`
 
-Na função `run` que devem ser alterados são: 
-- `diretorio_raiz` : usado para apontar o caminho do arquivo final convertido.
-- `diretorio_musicas`: usado para apontar o caminho dos arquivos a serem convertidos.
-- `diretorio_musicas_convertidas` : somente o nome da pasta onde os arquivos exportados seram salvos.
+![tela-principal](./assets/img/tela-principal.png)
 
-- se necessário os formatos dos arquivos que devem ser buscados na função `exportar_mp3` 
 
-Exemplo, listando arquivo que tenham a extensão `.mp4`, `.mp3`:
+### Telas de erro
 
-![print-funcao-run](./assets/img/print_def_run.png)
+Aparece quando seleciona a opção 1 ou 3 e o campo de url está vazio.
 
-## TROUBLESHOOT
+![erro-url-nao-preenchida](./assets/img/erro-url-nao-preenchida.png)
 
-### No module named 'pyaudioop'
-`pip installl audioop-lts`
+Aparece quando seleciona a opção 1 ou 3 e o campo de url foi preenchido com uma url que não é do youtube ou está incompleta.
+
+![erro-url-invalida](./assets/img/erro-url-invalida.png)
+
+
+## Instalação
+
+### Instalação dependências
+
+Instale as dependências do projeto com o `requirements.txt`
+
+~~~python
+pip install -r requirements.txt
+~~~
+
+ou instale manualmente todos
+
+~~~python
+pip install audioop-lts
+pip install pydub
+pip install pytubefix
+~~~
+
+
+### Instalação FFMPEG
+
+Na raiz do projeto contém o arquivo [ffmpeg-2024-11-21-git-f298507323-essentials_build.zip](ffmpeg-2024-11-21-git-f298507323-essentials_build.zip) com os aquivos necessários.
+
+Extrair todos para seu local de preferência.
+
+> Recomendado adicionar o caminho da pasta `bin` as variáveis de ambiente do sistema PATH (no Windows) ou passar o caminho para o objeto instanciado.
+
+## Gerar build do projeto
+
+Instale as dependências de projeto com o `requirements_build.txt`
+
+~~~python
+pip install -r requirements_build.txt
+~~~
+
+ou instale manualmente
+
+~~~python
+pip install cx_Freeze
+~~~
+
+Na raiz do projeto o aquivo `setup.py` contêm as configurações necessárias para gerar o build do projeto.
+
+No terminal execute o comando:
+~~~python
+python ./setup.py build
+~~~
+
+> O tempo de geração de geração do build pode variar de acordo com as configurações do hardware da máquina.
+
+O arquivo final será gerado no caminho `./build/`
