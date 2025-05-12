@@ -20,27 +20,36 @@ def run() -> None:
         try:
             choice = int(input(srt_choice))
 
+            if choice not in(0,1,2,3):
+                print('!!! Opcao Invalida !!!')
+
+            elif choice == 0:
+                print('Encerrando execucao')
+                break
+
+            elif choice == 1:
+                url:str = input('Insira a url do video: ')
+
+                try:
+                    dfy.download(url)
+                except Exception as e:
+                    print('Erro.\nVerifique se a url e valida.')
+
+            elif choice == 2:
+                conversor._cut_audio_segment()
+
+            elif choice == 3:
+                url:str = input('Insira a url do video: ')
+                try:
+                    dfy.download_mp3(url)
+                except Exception as e:
+                    print('Erro.\nVerifique se a url e valida.')
+
         except Exception as e:
             print(e)
-            pass
-
-        if choice not in(0,1,2,3):
             print('!!! Opcao Invalida !!!')
 
-        elif choice == 0:
-            print('Encerrando execucao')
-            break
-
-        elif choice == 1:
-            url:str = input('Insira a url do video: ')
-            dfy.download(url)
-
-        elif choice == 2:
-            conversor.cut_audio_segment()
-
-        elif choice == 3:
-            url:str = input('Insira a url do video: ')
-            dfy.download_mp3(url)
+            pass
 
         choice = 0
 

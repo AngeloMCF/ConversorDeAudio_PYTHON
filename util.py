@@ -33,9 +33,11 @@ def clean_scream() -> None:
     os.system('cls' if os.name == 'nt' else 'clear')
 
 def log_to_file(erro:str, texto:str, file_name:str = f"{str(datetime.now())[:19].replace(':', '-').replace(' ', '-')}-logs.txt", crititca:bool = True):
-
+    """
+       mensagem final: 'Erro durante execucao: "{texto}", erro: {erro}\n' if crititca else texto
+    """
     with open (os.path.join('logs', file_name), 'a') as _log_file:
-        m:str = f'Erro durante execucao: "{texto}", erro: {erro}' if crititca else texto
+        m:str = f'Erro durante execucao: "{texto}", erro: {erro}\n' if crititca else texto
         _log_file.write(m)
 
 

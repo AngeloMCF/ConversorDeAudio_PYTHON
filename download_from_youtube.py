@@ -15,23 +15,18 @@ def download(url:str) -> None :
     download_mp4(yt)
     download_m4a(yt)
     
-    print(yt.title)
-
-    
 def download_m4a(youtube: YouTube) -> None :
     try:
         youtube_audio = youtube.streams.get_audio_only()
         youtube_audio.download(output_path=destino_audio)
-        print(f'arquivo salvo em: "{destino_audio}\n"')
 
     except Exception as e:
-        print(f'erro durante: download_m4a; url:{youtube.url}')
-
+        util.log_to_file(e, 'download_m4a')
 
 def download_mp3(url):
     yt:YouTube = YouTube(url, on_progress_callback=on_progress)
     file: str = yt.title + '.m4a'
-    print(file)
+
     download_m4a(yt)
 
     convert_mp3(destino_audio, diretorio_musicas_covertidas, file)
@@ -40,7 +35,8 @@ def download_mp3(url):
         remove_file_path:str = os.path.join(destino_audio, file) 
         os.remove(remove_file_path)
     except Exception as e:
-        print(e)
+        util.log_to_file(e, 'download_mp3 -  os.remove(remove_file_path)')
+
 
 def download_mp4(youtube: YouTube) -> None :
     try:
@@ -48,7 +44,7 @@ def download_mp4(youtube: YouTube) -> None :
         youtube_video.download(output_path=destino_video)
 
     except Exception as e:
-        print(f'erro durante: download_mp4; url:{youtube.url}')
+        util.log_to_file(e, 'download_mp4')
 
 
 def run():

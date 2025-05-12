@@ -106,7 +106,8 @@ def export_mp3_list(lista:list, dir_music:str, dir_eport_path:str,
     show_message(cc, qnt)
 
     if os.path.exists(f'logs/{log_file_name}'):
-        print(f'Arquivo de logs em: "./logs/{log_file_name}"')
+        util.log_to_file('', f'Arquivo de logs em: "./logs/{log_file_name}"', crititca= False)        
+        # print(f'Arquivo de logs em: "./logs/{log_file_name}"')
 
 def convert_mp3(input_path:str, output_path:str, file:str, 
                 equalize_audio: bool = False, 
@@ -122,26 +123,27 @@ def convert_mp3(input_path:str, output_path:str, file:str,
         caminho:str = os.path.join(cwd, input_path, file)
         caminho_arquivo_final:str = os.path.join(cwd, output_path,file_name + '.mp3' )
 
-        print('\tIniciando extracao.')
+        # print('\tIniciando extracao.')
         mp3: AudioSegment = AudioSegment.from_file(caminho, file_extension)
-        print('\tArquivo extraido.')
+        # print('\tArquivo extraido.')
 
         if equalize_audio:
-            print('\tIniciando normalizacao.')
+            # print('\tIniciando normalizacao.')
             mp3 = effects.normalize(mp3)
-            print('\tArquivo normalizado.')
+            # print('\tArquivo normalizado.')
             
         if remove_silence_edges:
-            print('\tRemovendo silencio das bordas.')
+            # print('\tRemovendo silencio das bordas.')
             mp3 = effects.strip_silence(mp3)
-            print('\tSilencio removido.')
+            # print('\tSilencio removido.')
         
-        print('\tExportando aquivo.')
+        # print('\tExportando aquivo.')
         mp3.export(caminho_arquivo_final, format='mp3')
-        print('\tArquivo exportado.\n')
+        # print('\tArquivo exportado.\n')
 
     except Exception as e:
-        print(f'erro convert_mp3: {e}')
+        util.log_to_file(e, 'convert_mp3')
+
 
 def lista_arquivos() -> list[str] | list | None:
     pasta_audio:str = diretorio_musicas_covertidas
@@ -150,7 +152,7 @@ def lista_arquivos() -> list[str] | list | None:
     return pasta_audio_aquivos
 
 
-def cut_audio_segment():
+def _cut_audio_segment():
     pasta_audio:str = diretorio_musicas_covertidas
     pasta_audio_aquivos:list = os.listdir(pasta_audio)
     tamanho_lista: int = len(pasta_audio_aquivos)
@@ -199,7 +201,9 @@ def cut_audio_segment(file:str, inicio: float, fim: float) -> None:
 
     audios:AudioSegment = AudioSegment
 
-    print(f'\nFaixa escolhida: {file}')
+    util.log_to_file('', f'\ncut_audio_segment - Faixa escolhida: {file}', crititca= False)
+
+    # print(f'\nFaixa escolhida: {file}')
     try:
         inicio:float = float(inicio) * 1000
         fim:float = float(fim) * 1000
@@ -207,12 +211,13 @@ def cut_audio_segment(file:str, inicio: float, fim: float) -> None:
         audio = audio[inicio:fim]
 
         # print('\n', os.path.join(diretorio_musicas_covertidas, f'{pasta_audio_aquivos[escolha][0:-4]}_recortado.mp3'))
-        print(f'inicio: {inicio if inicio == 0 else inicio/1000 } segundos | fim: {fim/1000} segundos')
+        # print(f'inicio: {inicio if inicio == 0 else inicio/1000 } segundos | fim: {fim/1000} segundos')
+        util.log_to_file('', f'\ncut_audio_segment - inicio: {inicio if inicio == 0 else inicio/1000 } segundos | fim: {fim/1000} segundos', crititca= False)
 
         audio.export(os.path.join(diretorio_musicas_covertidas, f'{file[0:-4]}_recortado.mp3'), format='mp3')
 
     except Exception as e:
-        print('erro: {e}')
+        util.log_to_file(e, f'cut_audio_segment')
         return
     
 
