@@ -14,13 +14,15 @@ def baixar_video_audio():
     url = url_entry.get()
     if url:
         try:
-            dfy.download_mp3(url)
-            messagebox.showinfo("Sucesso", "Download de áudio MP3 concluído.")
-        except:
-            messagebox.showerror("Erro", "URL invalida.")
+            dfy.download(url)
+            messagebox.showinfo("Sucesso", "Download de vídeo e áudio concluído.")
+        except Exception as e:
+            util.log_to_file(e, 'gui_baixar_video_audio')
+            messagebox.showerror("Erro", "URL inválida.")
+            return
+
     else:
         messagebox.showerror("Erro", "URL não pode estar vazia.")
-
 
 def baixar_audio_mp3():
     url = url_entry.get()
@@ -28,11 +30,13 @@ def baixar_audio_mp3():
         try:
             dfy.download_mp3(url)
             messagebox.showinfo("Sucesso", "Download de áudio MP3 concluído.")
-        except:
-            messagebox.showerror("Erro", "URL invalida.")
+        except Exception as e:
+            util.log_to_file(e, 'gui_baixar_audio_mp3')
+            messagebox.showerror("Erro", "URL inválida.")
+            return
+
     else:
         messagebox.showerror("Erro", "URL não pode estar vazia.")
-
 
 def recortar_audio():
     try:
