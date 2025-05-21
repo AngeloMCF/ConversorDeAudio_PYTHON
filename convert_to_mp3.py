@@ -138,7 +138,7 @@ def convert_mp3(input_path:str, output_path:str, file:str,
             # print('\tSilencio removido.')
         
         # print('\tExportando aquivo.')
-        mp3.export(caminho_arquivo_final, format='mp3')
+        mp3.export(caminho_arquivo_final, format='mp3', bitrate='320k')
         # print('\tArquivo exportado.\n')
 
     except Exception as e:
