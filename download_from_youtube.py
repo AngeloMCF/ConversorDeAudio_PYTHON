@@ -11,7 +11,8 @@ from convert_to_mp3 import convert_mp3
 def download(url:str) -> None :
 
     yt:YouTube = YouTube(url, on_progress_callback=on_progress)
-
+    yt.title = normalize_name(yt.title)
+    
     download_mp4(yt)
     download_m4a(yt)
     
@@ -25,6 +26,8 @@ def download_m4a(youtube: YouTube) -> None :
 
 def download_mp3(url):
     yt:YouTube = YouTube(url, on_progress_callback=on_progress)
+    yt.title = normalize_name(yt.title)
+    
     file: str = yt.title + '.m4a'
 
     download_m4a(yt)
@@ -41,11 +44,14 @@ def download_mp3(url):
 def download_mp4(youtube: YouTube) -> None :
     try:
         youtube_video = youtube.streams.get_highest_resolution()
+        youtube_video.title = normalize_name(youtube_video.title)
         youtube_video.download(output_path=destino_video)
-
     except Exception as e:
         util.log_to_file(e, 'download_mp4')
 
+
+def normalize_name(string:str) -> str:
+    return util.remove_reserved_char(string)
 
 def run():
     util.setup()

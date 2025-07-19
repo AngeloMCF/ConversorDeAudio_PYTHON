@@ -1,5 +1,6 @@
 import os
 from datetime import datetime
+import re
 
 from default_config import diretorio_musicas_coverter,  diretorio_musicas_covertidas
 from default_config import destino_video, destino_audio, arquivo_links_baixar_youtube
@@ -40,6 +41,18 @@ def log_to_file(erro:str, texto:str, file_name:str = f"{str(datetime.now())[:19]
         m:str = f'Erro durante execucao: "{texto}", erro: {erro}\n' if crititca else texto
         _log_file.write(m)
 
+
+def remove_reserved_char(string:str) -> str:
+
+    string = re.sub(r'[\\\/:*?"<>|]', '', string)
+    reserved_words = ['CON', 'PRN', 'AUX', 'NUL', 'COM1', 'COM9', 'LPT1', 'LPT9']
+
+    for word in reserved_words:
+        string = string.replace(word, '')
+    
+    string = string.replace('  ', ' ')
+
+    return string
 
 if __name__ == '__main__':
     clean_scream()
