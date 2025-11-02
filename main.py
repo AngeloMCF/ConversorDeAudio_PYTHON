@@ -13,6 +13,7 @@ def run() -> None:
     "\t[1] Baixar video (mp4) e audio (m4a) \n" \
     "\t[2] Recortar audio \n" \
     "\t[3] Baixar audio (mp3) \n" \
+    "\t[4] Baixar lista audio (mp3) \n" \
     "Digite a opcao escolhida: "
 
     while True:
@@ -20,7 +21,7 @@ def run() -> None:
         try:
             choice = int(input(srt_choice))
 
-            if choice not in(0,1,2,3):
+            if choice not in(0,1,2,3, 4):
                 print('!!! Opcao Invalida !!!')
 
             elif choice == 0:
@@ -36,7 +37,7 @@ def run() -> None:
                     print('Erro.\nVerifique se a url e valida.')
 
             elif choice == 2:
-                conversor._cut_audio_segment()
+                conversor.cut_audio_segment_()
 
             elif choice == 3:
                 url:str = input('Insira a url do video: ')
@@ -44,6 +45,9 @@ def run() -> None:
                     dfy.download_mp3(url)
                 except Exception as e:
                     print('Erro.\nVerifique se a url e valida.')
+
+            elif choice == 4:
+                dfy.baixar_lista()
 
         except Exception as e:
             print(e)
