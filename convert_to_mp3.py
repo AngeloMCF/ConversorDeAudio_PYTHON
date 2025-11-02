@@ -152,9 +152,10 @@ def lista_arquivos() -> list[str] | list | None:
     return pasta_audio_aquivos
 
 
-def _cut_audio_segment():
+def cut_audio_segment_():
     pasta_audio:str = diretorio_musicas_covertidas
-    pasta_audio_aquivos:list = os.listdir(pasta_audio)
+    pasta_audio_aquivos:list = listar_diretorio_por_tipo_arquivo(diretorio_musicas_covertidas, lista_formatos_aceitos)
+    
     tamanho_lista: int = len(pasta_audio_aquivos)
 
     audios:AudioSegment = AudioSegment
@@ -194,7 +195,7 @@ def _cut_audio_segment():
             audio.export(os.path.join(diretorio_musicas_covertidas, f'{pasta_audio_aquivos[escolha][0:-4]}_recortado.mp3'), format='mp3')
 
         except Exception as e:
-            print('erro: {e}')
+            print(f'erro: {e}')
             return
 
 def cut_audio_segment(file:str, inicio: float, fim: float) -> None:
