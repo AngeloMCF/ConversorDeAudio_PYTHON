@@ -43,7 +43,7 @@ def download_mp3(url:str):
 def download_mp4(youtube: YouTube) -> None :
     try:
         youtube_video = youtube.streams.get_highest_resolution()
-        youtube_video.download(output_path=destino_video, filename=normalize_name(youtube_video.title))
+        youtube_video.download(output_path=destino_video, filename=normalize_name(youtube_video.title) + '.mp4')
     except Exception as e:
         util.log_to_file(e, 'download_mp4')
 
